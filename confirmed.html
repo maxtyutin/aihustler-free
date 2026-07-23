@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no"/>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Регистрация подтверждена — AI Hustlers</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,12 +56,21 @@
   <style>
     @keyframes tnw-pulse { 0%,100%{opacity:1} 50%{opacity:.45} }
     
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    /* Strict Mobile Horizontal Scroll Lock */
+    html, body {
+      width: 100% !important;
+      max-width: 100% !important;
+      overflow-x: hidden !important;
+      position: relative !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      touch-action: pan-y !important;
     }
-    
+
+    *, *:before, *:after {
+      box-sizing: border-box !important;
+    }
+
     body {
       background: #0a0a0c;
       color: #e5e2e1;
@@ -73,6 +83,18 @@
       padding: 24px;
       overflow-x: hidden;
       position: relative;
+    }
+
+    .container, .card, .notice, .btn, .live-badge, .glow, form, input {
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Disable auto-highlighting of numbers/INN/OGRNIP on iOS mobile */
+    [x-apple-data-detectors],
+    a[x-apple-data-detectors] {
+      color: inherit !important;
+      text-decoration: none !important;
     }
 
     body::before {
@@ -89,7 +111,8 @@
     /* Glow backdrop */
     .glow {
       position: absolute;
-      width: 500px;
+      width: 100%;
+      max-width: 500px;
       height: 500px;
       background: radial-gradient(circle, rgba(77, 142, 255, 0.15) 0%, transparent 70%);
       pointer-events: none;

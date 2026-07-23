@@ -498,7 +498,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           color: rgba(229, 226, 225, 0.6) !important;
         }
       
-        /* Strict Mobile Horizontal Scroll Lock */
+        /* Strict Universal Mobile Horizontal Scroll Lock */
         html, body {
           width: 100% !important;
           max-width: 100% !important;
@@ -506,15 +506,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           position: relative !important;
           margin: 0 !important;
           padding: 0 !important;
+          touch-action: pan-y !important;
         }
 
         *, *:before, *:after {
           box-sizing: border-box !important;
         }
 
-        main, section, header, footer, .container-pad, .hero-grid, .twocol {
+        main, section, header, footer, form, input, button, .container-pad, .hero-grid, .twocol, #custom-reg-modal, #custom-lead-form {
           max-width: 100% !important;
           overflow-x: hidden !important;
+          box-sizing: border-box !important;
         }
 
         .ticker-container, .ticker-wrap, .section-pad {
