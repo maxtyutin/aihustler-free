@@ -728,7 +728,31 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <!-- Phone -->
       <div>
         <label style="display: block; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #adc6ff; margin-bottom: 6px; font-weight: 700;">Телефон <span style="color: #ffb780;">*</span></label>
-        <input type="tel" name="Телефон" required placeholder="+7 (999) 000-00-00" style="width: 100%; box-sizing: border-box; background: #0a0a0c; border: 1px solid rgba(66, 71, 84, 0.5); border-radius: 6px; padding: 14px 16px; color: #e5e2e1; font-size: 14px; outline: none; transition: all 0.2s;">
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <select id="custom-country-code" style="background: #0a0a0c; border: 1px solid rgba(66, 71, 84, 0.5); border-radius: 6px; padding: 14px 10px; color: #e5e2e1; font-size: 13px; outline: none; cursor: pointer; min-width: 110px; font-family: inherit; transition: all 0.2s;">
+            <option value="+7" selected>🇷🇺 +7 (RU)</option>
+            <option value="+375">🇧🇾 +375 (BY)</option>
+            <option value="+7_KZ">🇰🇿 +7 (KZ)</option>
+            <option value="+998">🇺🇿 +998 (UZ)</option>
+            <option value="+996">🇰🇬 +996 (KG)</option>
+            <option value="+374">🇦🇲 +374 (AM)</option>
+            <option value="+995">🇬🇪 +995 (GE)</option>
+            <option value="+90">🇹🇷 +90 (TR)</option>
+            <option value="+971">🇦🇪 +971 (AE)</option>
+            <option value="+1">🇺🇸 +1 (US)</option>
+            <option value="+49">🇩🇪 +49 (DE)</option>
+            <option value="+44">🇬🇧 +44 (UK)</option>
+            <option value="+48">🇵🇱 +48 (PL)</option>
+            <option value="+972">🇮🇱 +972 (IL)</option>
+            <option value="+380">🇺🇦 +380 (UA)</option>
+            <option value="+373">🇲🇩 +373 (MD)</option>
+            <option value="+994">🇦🇿 +994 (AZ)</option>
+            <option value="+992">🇹🇯 +992 (TJ)</option>
+            <option value="+993">🇹🇲 +993 (TM)</option>
+            <option value="+">🌐 Другая страна</option>
+          </select>
+          <input type="tel" id="custom-phone-input" name="Телефон" required placeholder="(999) 000-00-00" style="flex: 1; box-sizing: border-box; background: #0a0a0c; border: 1px solid rgba(66, 71, 84, 0.5); border-radius: 6px; padding: 14px 16px; color: #e5e2e1; font-size: 14px; outline: none; transition: all 0.2s;">
+        </div>
       </div>
       
       <p style="font-size: 11px; line-height: 1.5; color: #8c909f; text-align: center; margin: 4px 0 0;">
@@ -762,6 +786,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       closeBtn.style.color = '#8c909f';
     });
     
+    var countrySelectEl = document.getElementById('custom-country-code');
+    if (countrySelectEl) {
+      countrySelectEl.addEventListener('focus', function() {
+        countrySelectEl.style.borderColor = '#4d8eff';
+        countrySelectEl.style.boxShadow = '0 0 8px rgba(77, 142, 255, 0.2)';
+      });
+      countrySelectEl.addEventListener('blur', function() {
+        countrySelectEl.style.borderColor = 'rgba(66, 71, 84, 0.5)';
+        countrySelectEl.style.boxShadow = 'none';
+      });
+    }
     inputs.forEach(function(input) {
       input.addEventListener('focus', function() {
         input.style.borderColor = '#4d8eff';
@@ -856,7 +891,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       
       var userName = form.querySelector('[name="Имя"]').value;
       var userEmail = form.querySelector('[name="Email"]').value;
-      var userPhone = form.querySelector('[name="Телефон"]').value;
+      var countrySelect = document.getElementById('custom-country-code');
+      var rawPhone = document.getElementById('custom-phone-input') ? document.getElementById('custom-phone-input').value.trim() : '';
+      var codeVal = countrySelect ? countrySelect.value : '+7';
+      if (codeVal === '+7_KZ') codeVal = '+7';
+      var userPhone = codeVal + ' ' + rawPhone;
 
       var w3fData = {
         'access_key': '41bc8576-ffd3-4a5d-bf2f-456a11df1864',
