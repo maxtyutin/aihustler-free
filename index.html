@@ -726,7 +726,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     var errorMsg = document.getElementById('custom-error-msg');
     var inputs = form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]');
     
-    // Smooth hover effects on buttons and focus on inputs
     closeBtn.addEventListener('mouseenter', function() {
       closeBtn.style.background = 'rgba(255, 255, 255, 0.1)';
       closeBtn.style.color = '#e5e2e1';
@@ -747,7 +746,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       });
     });
     
-    // Determine dynamic confirmed redirect URL
     var redirectInput = document.getElementById('custom-redirect-url');
     var basePath = window.location.pathname;
     if (basePath.endsWith('index.html')) {
@@ -776,17 +774,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       if (e.target === modal) hideModal();
     });
     
-    // Intercept clicks on any buttons that contain "забронировать", "присоединиться", "получить", "забрать", "доступ"
     document.addEventListener('click', function(e) {
       var target = e.target;
       if (modal && modal.contains(target)) {
-        return; // Do not intercept clicks inside the modal
+        return;
       }
       while (target && target !== document.body) {
         var isButton = target.tagName === 'BUTTON' || (target.tagName === 'A' && target.getAttribute('role') === 'button');
         if (isButton) {
           if (target.classList.contains('faq-trigger')) {
-            return; // Do not trigger modal for FAQ accordion buttons
+            return;
           }
           var text = target.textContent.toLowerCase();
           if (
@@ -802,9 +799,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
         target = target.parentNode;
       }
-    }, true); // use Capture to intercept clicks before React/NextJS suppresses them
+    }, true);
 
-    // FAQ accordion toggle handlers
     document.querySelectorAll('.faq-trigger').forEach(function(trigger) {
       trigger.addEventListener('click', function(e) {
         e.preventDefault();
@@ -812,7 +808,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         var item = trigger.closest('.faq-item');
         var wasActive = item.classList.contains('active');
         
-        // Close all other items
         document.querySelectorAll('.faq-item').forEach(function(el) {
           el.classList.remove('active');
         });
@@ -823,36 +818,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       });
     });
 
-    // Form submission
-        // Autoresponder Email Template
-    var autoresponseHtml = '<!DOCTYPE html>\n<html lang="ru">\n<head>
-  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no"/>\n  <meta charset="UTF-8">\n  <title>Подтверждение регистрации — AI Hustlers</title>\n</head>\n<body style="margin: 0; padding: 0; background-color: #0a0a0c; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: #e5e2e1;">\n  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #0a0a0c; padding: 40px 20px;">\n    <tr>\n      <td align="center">\n        <table width="100%" max-width="600" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; background-color: #141418; border: 1px solid rgba(173,198,255,0.15); border-radius: 12px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">\n          \n          <!-- Header Logo -->\n          <tr>\n            <td align="center" style="padding: 32px 32px 16px; border-bottom: 1px solid rgba(255,255,255,0.06);">\n              <span style="font-size: 22px; font-weight: 900; letter-spacing: -0.04em; text-transform: uppercase; color: #4d8eff; display: block;">AI HUSTLERS</span>\n              <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #adc6ff; margin-top: 6px; display: block;">ОНЛАЙН МАСТЕР-КЛАСС</span>\n            </td>\n          </tr>\n\n          <!-- Main Content -->\n          <tr>\n            <td style="padding: 32px;">\n              <h1 style="font-size: 24px; font-weight: 900; line-height: 1.25; text-transform: uppercase; color: #ffffff; margin: 0 0 16px; text-align: center;">\n                ВЫ УСПЕШНО<br><span style="color: #4d8eff;">ЗАРЕГИСТРИРОВАЛИСЬ!</span>\n              </h1>\n              \n              <p style="font-size: 15px; line-height: 1.6; color: #c2c6d6; margin: 0 0 24px; text-align: center;">\n                Здравствуйте! Поздравляем, доступ к мастер-классу забронирован за вашим e-mail. Ниже находятся все детали участия и ссылки на эфир.\n              </p>\n\n              <!-- Card with Details -->\n              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: rgba(42,42,42,0.4); border: 1px solid rgba(173,198,255,0.15); border-radius: 8px; margin-bottom: 28px;">\n                <tr>\n                  <td style="padding: 20px;">\n                    <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #adc6ff; margin-bottom: 14px;">ДЕТАЛИ МАСТЕР-КЛАССА</div>\n                    \n                    <div style="font-size: 14px; line-height: 1.6; color: #c2c6d6; margin-bottom: 12px;">\n                      <strong style="color: #ffffff;">Спикер:</strong><br>\n                      Максим, основатель AI Hustlers (создатель более 20 онлайн-продуктов)\n                    </div>\n\n                    <div style="font-size: 14px; line-height: 1.6; color: #c2c6d6;">\n                      <strong style="color: #ffffff;">Тема:</strong><br>\n                      Как бесплатно создать свой онлайн-продукт за 1 вечер с помощью AI и зарабатывать на нём от 5000$ в месяц\n                    </div>\n                  </td>\n                </tr>\n              </table>\n\n              <!-- CTA Buttons -->\n              <div style="text-align: center; margin-bottom: 28px;">\n                <p style="font-size: 14px; font-weight: 700; color: #ffffff; margin: 0 0 16px; text-transform: uppercase; letter-spacing: 0.05em;">\n                  Выберите где смотреть мастер-класс:\n                </p>\n                \n                <!-- Button 1: Telegram -->\n                <a href="https://t.me/ai_hustlers_sale_bot" target="_blank" style="display: block; background: linear-gradient(135deg, #adc6ff 0%, #4d8eff 100%); color: #001a42; font-weight: 800; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 16px 24px; border-radius: 6px; margin-bottom: 12px; box-shadow: 0 4px 20px rgba(77,142,255,0.3);">\n                  СМОТРЕТЬ МАСТЕР-КЛАСС В ТЕЛЕГРАМ →\n                </a>\n\n                <!-- Button 2: VKontakte -->\n                <a href="https://vk.com/" target="_blank" style="display: block; background: rgba(77, 142, 255, 0.12); border: 1px solid rgba(77, 142, 255, 0.4); color: #adc6ff; font-weight: 800; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 16px 24px; border-radius: 6px;">\n                  СМОТРЕТЬ МАСТЕР-КЛАСС ВКОНТАКТЕ →\n                </a>\n              </div>\n\n              <!-- Important instructions -->\n              <div style="background-color: rgba(255,255,255,0.03); border-radius: 6px; padding: 16px; text-align: center;">\n                <p style="font-size: 12px; line-height: 1.6; color: #8c909f; margin: 0;">\n                  Если письмо пришло в папку «Спам» или «Промоакции», перенесите его во «Входящие», чтобы не пропустить важные материалы.<br><br>\n                  По любым вопросам пишите напрямую спикеру: <a href="mailto:maxtyutin@gmail.com" style="color: #4d8eff; text-decoration: none;">maxtyutin@gmail.com</a>\n                </p>\n              </div>\n\n            </td>\n          </tr>\n\n          <!-- Footer -->\n          <tr>\n            <td align="center" style="padding: 20px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 11px; color: #5c606f;">\n              © 2026 AI Hustlers · Все права защищены<br>\n              ИП Тютин Максим Андреевич · ОГРНИП 32344 00000 18883\n            </td>\n          </tr>\n\n        </table>\n      </td>\n    </tr>\n  </table>\n
-<script>
-  (function() {
-    function syncCollageScale() {
-      var wrappers = document.querySelectorAll('.speaker-collage-wrapper');
-      wrappers.forEach(function(w) {
-        var parent = w.parentElement;
-        var availW = parent ? parent.clientWidth : window.innerWidth;
-        var targetW = Math.min(504, availW);
-        var scale = targetW / 504;
-        w.style.width = targetW + 'px';
-        w.style.height = Math.round(435 * scale) + 'px';
-        w.style.setProperty('--collage-scale', scale);
-      });
-    }
-    window.addEventListener('resize', syncCollageScale);
-    window.addEventListener('DOMContentLoaded', syncCollageScale);
-    window.addEventListener('load', syncCollageScale);
-    syncCollageScale();
-    setTimeout(syncCollageScale, 100);
-    setTimeout(syncCollageScale, 500);
-  })();
-</script>
+    var autoresponseHtml = '<!DOCTYPE html><html lang="ru"><head><meta name="format-detection" content="telephone=no, date=no, address=no, email=no"/><meta charset="UTF-8"><title>Подтверждение регистрации — AI Hustlers</title></head><body style="margin: 0; padding: 0; background-color: #0a0a0c; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: #e5e2e1;"><table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #0a0a0c; padding: 40px 20px;"><tr><td align="center"><table width="100%" max-width="600" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; background-color: #141418; border: 1px solid rgba(173,198,255,0.15); border-radius: 12px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5);"><tr><td align="center" style="padding: 32px 32px 16px; border-bottom: 1px solid rgba(255,255,255,0.06);"><span style="font-size: 22px; font-weight: 900; letter-spacing: -0.04em; text-transform: uppercase; color: #4d8eff; display: block;">AI HUSTLERS</span><span style="font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #adc6ff; margin-top: 6px; display: block;">ОНЛАЙН МАСТЕР-КЛАСС</span></td></tr><tr><td style="padding: 32px;"><h1 style="font-size: 24px; font-weight: 900; line-height: 1.25; text-transform: uppercase; color: #ffffff; margin: 0 0 16px; text-align: center;">ВЫ УСПЕШНО<br><span style="color: #4d8eff;">ЗАРЕГИСТРИРОВАЛИСЬ!</span></h1><p style="font-size: 15px; line-height: 1.6; color: #c2c6d6; margin: 0 0 24px; text-align: center;">Здравствуйте! Поздравляем, доступ к мастер-классу забронирован за вашим e-mail. Ниже находятся все детали участия и ссылки на эфир.</p><table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: rgba(42,42,42,0.4); border: 1px solid rgba(173,198,255,0.15); border-radius: 8px; margin-bottom: 28px;"><tr><td style="padding: 20px;"><div style="font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #adc6ff; margin-bottom: 14px;">ДЕТАЛИ МАСТЕР-КЛАССА</div><div style="font-size: 14px; line-height: 1.6; color: #c2c6d6; margin-bottom: 12px;"><strong style="color: #ffffff;">Спикер:</strong><br>Максим, основатель AI Hustlers (создатель более 20 онлайн-продуктов)</div><div style="font-size: 14px; line-height: 1.6; color: #c2c6d6;"><strong style="color: #ffffff;">Тема:</strong><br>Как бесплатно создать свой онлайн-продукт за 1 вечер с помощью AI и зарабатывать на нём от 5000$ в месяц</div></td></tr></table><div style="text-align: center; margin-bottom: 28px;"><p style="font-size: 14px; font-weight: 700; color: #ffffff; margin: 0 0 16px; text-transform: uppercase; letter-spacing: 0.05em;">Выберите где смотреть мастер-класс:</p><a href="https://t.me/ai_hustlers_sale_bot" target="_blank" style="display: block; background: linear-gradient(135deg, #adc6ff 0%, #4d8eff 100%); color: #001a42; font-weight: 800; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 16px 24px; border-radius: 6px; margin-bottom: 12px; box-shadow: 0 4px 20px rgba(77,142,255,0.3);">СМОТРЕТЬ МАСТЕР-КЛАСС В ТЕЛЕГРАМ &rarr;</a><a href="https://vk.com/" target="_blank" style="display: block; background: rgba(77, 142, 255, 0.12); border: 1px solid rgba(77, 142, 255, 0.4); color: #adc6ff; font-weight: 800; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 16px 24px; border-radius: 6px;">СМОТРЕТЬ МАСТЕР-КЛАСС ВКОНТАКТЕ &rarr;</a></div><div style="background-color: rgba(255,255,255,0.03); border-radius: 6px; padding: 16px; text-align: center;"><p style="font-size: 12px; line-height: 1.6; color: #8c909f; margin: 0;">Если письмо пришло в папку «Спам» или «Промоакции», перенесите его во «Входящие», чтобы не пропустить важные материалы.<br><br>По любым вопросам пишите напрямую спикеру: <a href="mailto:maxtyutin@gmail.com" style="color: #4d8eff; text-decoration: none;">maxtyutin@gmail.com</a></p></div></td></tr><tr><td align="center" style="padding: 20px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 11px; color: #5c606f;">© 2026 AI Hustlers · Все права защищены<br>ИП Тютин Максим Андреевич · ОГРНИП 32344 00000 18883</td></tr></table></td></tr></table></body></html>';
 
-<\/body>\n<\/html>';
-
-    // Form submission
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       submitBtn.disabled = true;
@@ -884,25 +851,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         '_captcha': 'false'
       };
       
-      // Submit to both form services to guarantee lead notification + automated email reply from maxtyutin@gmail.com
       Promise.all([
         fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify(w3fData)
-        }).catch(function(err) { return { ok: false }; }),
+        }).catch(function() { return { ok: false }; }),
 
         fetch('https://formsubmit.co/ajax/maxtyutin@gmail.com', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify(formSubmitData)
-        }).catch(function(err) { return { ok: false }; })
+        }).catch(function() { return { ok: false }; })
       ])
       .then(function() {
         submitBtn.textContent = 'ПЕРЕХОД...';
         window.location.href = redirectInput.value;
       })
-      .catch(function(err) {
+      .catch(function() {
         submitBtn.disabled = false;
         submitBtn.textContent = 'ЗАБРОНИРОВАТЬ БЕСПЛАТНОЕ МЕСТО →';
         submitBtn.style.opacity = '1';
@@ -910,84 +876,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         errorMsg.style.display = 'block';
       });
     });
-    });
-  })();
-</script>
-<script>
-  (function() {
-    const monthsRuGenitive = [
-      "января", "февраля", "марта", "апреля", "мая", "июня",
-      "июля", "августа", "сентября", "октября", "ноября", "декабря"
-    ];
-
-    // Get current time and shift to MSK (UTC+3)
-    const nowUtc = new Date();
-    const mskTime = new Date(nowUtc.getTime() + 3 * 3600 * 1000);
-    const mskHours = mskTime.getUTCHours();
-
-    let targetMsk = new Date(mskTime);
-    if (mskHours >= 19) {
-      targetMsk.setUTCDate(targetMsk.getUTCDate() + 1);
-    }
-    targetMsk.setUTCHours(19, 0, 0, 0);
-
-    const targetYear = targetMsk.getUTCFullYear();
-    const targetMonth = targetMsk.getUTCMonth();
-    const targetDate = targetMsk.getUTCDate();
-
-    const dateShort = targetDate + " " + monthsRuGenitive[targetMonth];
-    const dateFull = dateShort + " " + targetYear + " г. 19:00 по МСК";
-
-    const shortEls = document.querySelectorAll('.dynamic-date-short');
-    shortEls.forEach(function(el) {
-      el.textContent = dateShort;
-    });
-
-    const fullEls = document.querySelectorAll('.dynamic-date-full');
-    fullEls.forEach(function(el) {
-      el.textContent = dateFull;
-    });
-
-    // Ticking Countdown Timer to 19:00 MSK daily
-    function updateCountdown() {
-      const now = new Date();
-      const mskOffset = 3 * 3600 * 1000;
-      const nowUtcMs = now.getTime();
-      
-      let targetDateMsk = new Date(nowUtcMs + mskOffset);
-      if (targetDateMsk.getUTCHours() >= 19) {
-        targetDateMsk.setUTCDate(targetDateMsk.getUTCDate() + 1);
-      }
-      targetDateMsk.setUTCHours(19, 0, 0, 0);
-      
-      const targetTimeMs = targetDateMsk.getTime() - mskOffset;
-      
-      let diff = targetTimeMs - nowUtcMs;
-      if (diff < 0) {
-        diff = 0;
-      }
-      
-      const hours = Math.floor(diff / (3600 * 1000));
-      const mins = Math.floor((diff % (3600 * 1000)) / (60 * 1000));
-      const secs = Math.floor((diff % (60 * 1000)) / 1000);
-      
-      const pad = function(num) {
-        return String(num).padStart(2, '0');
-      };
-      
-      document.querySelectorAll('.timer-hours').forEach(function(el) {
-        el.textContent = pad(hours);
-      });
-      document.querySelectorAll('.timer-minutes').forEach(function(el) {
-        el.textContent = pad(mins);
-      });
-      document.querySelectorAll('.timer-seconds').forEach(function(el) {
-        el.textContent = pad(secs);
-      });
-    }
-    
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
   })();
 </script>
 
@@ -1013,5 +901,4 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     setTimeout(syncCollageScale, 500);
   })();
 </script>
-
 </body></html>
